@@ -286,10 +286,11 @@ cv_states_today_scatter %>%
 
 ```{r}
 ### FINISH THE CODE HERE ###
-p <- ggplot(cv_states_today_scatter, aes(x=pop_density, y=deathsper100k, size=population)) + geom____ 
+p <- ggplot(cv_states_today_scatter, aes(x=pop_density, y=deathsper100k, size=population)) + geom_point()+ geom_smooth()
 ggplotly(p)
 ```
 
+Overall, there does seem to be a relationship between population density and deaths per 100K people. A majority of the data points fit in the 95% confidence interval calculated by geom_smooth()
 
 ### 8. Multiple line chart
 
@@ -303,13 +304,18 @@ ggplotly(p)
 
 # Line chart for naive_CFR for all states over time using `plot_ly()`
 plot_ly(cv_states, x = ~date, y = ~naive_CFR, color = ~state, type = "scatter", mode = "lines")
+```
 
+Overall, it seems that the naive case fatality rate decreased throughout the month of September, even though it was not by a large marginl. A majority of states already had a peak in the CFR before September. 
+
+```{r}
 # Line chart for Texas showing new_cases and new_deaths together
 ### FINISH THE CODE HERE ###
-cv_states %>% filter(state=="Texas") %>% plot_ly(x = ~date, y = ~new_cases, type = "scatter", mode = "lines") %>% ___
+cv_states %>% filter(state=="Texas") %>% plot_ly(x = ~date, y = ~new_cases, type = "scatter", mode = "lines") %>% add_lines(x = ~date, y = ~new_deaths, type = "scatter", mode= "lines")
 
 ```
 
+The approximate peak of cases at around July 15th at around 15k. There was an increase of new deaths due to covid-19 at the end of July, so there seems to be a week to a week and a half delay between the peak of cases and peak of death. 
 
 ### 9. Heatmaps
 
