@@ -395,7 +395,7 @@ plot_ly(x=colnames(cv_states_mat2), y=rownames(cv_states_mat2),
 filter_dates <- seq(as.Date("2020-04-01"), as.Date("2020-10-01"), by="2 weeks")
 
 ### FINISH THE CODE HERE ### 
-cv_states_mat <- cv_states %>% select(state, date, new_cases) %>% filter( ___ )
+cv_states_mat <- cv_states %>% select(state, date, new_cases) %>% filter( date %in% filter_dates )
 
 cv_states_mat2 <- as.data.frame(pivot_wider(cv_states_mat, names_from = state, values_from = new_cases))
 rownames(cv_states_mat2) <- cv_states_mat2$date
@@ -450,7 +450,7 @@ fig <- plot_geo(cv_CFR, locationmode = 'USA-states') %>%
     z = ~naive_CFR, text = ~hover, locations = ~state,
     color = ~naive_CFR, colors = 'Purples'
   )
-fig <- fig %>% colorbar(title = "CFR May 1 2020", ___ = c(0,shadeLimit))
+fig <- fig %>% colorbar(title = "CFR May 1 2020", limits = c(0,shadeLimit))
 fig <- fig %>% layout(
     title = paste('CFR by State as of', Sys.Date(), '<br>(Hover for value)'),
     geo = set_map_details
@@ -483,7 +483,7 @@ fig <- plot_geo(cv_CFR, locationmode = 'USA-states') %>%
     z = ~naive_CFR, text = ~hover, locations = ~state,
     color = ~naive_CFR, colors = 'Purples'
   )
-fig <- fig %>% colorbar(title = "CFR May 1 2020", ___ = c(0,shadeLimit))
+fig <- fig %>% colorbar(title = "CFR May 1 2020", limits = c(0,shadeLimit))
 fig <- fig %>% layout(
     title = paste('CFR by State as of', Sys.Date(), '<br>(Hover for value)'),
     geo = set_map_details
@@ -493,5 +493,11 @@ fig_Today <- fig
 
 ### Plot side by side 
 ### FINISH THE CODE HERE ###
-subplot( ___ )
+subplot( fig_May1,fig_Today )
 ```
+
+Overall, there is a decrease in the case fatality rate in most of the
+country today than compared with May 1st, 2020. However, the state of
+New York seems to have a similar case fatality rate today than it did on
+May 1st. And Michigan actually had an increase in the case fatality rate
+today compared to that of May 1st.
