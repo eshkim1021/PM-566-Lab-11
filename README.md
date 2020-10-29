@@ -7,6 +7,7 @@ library(tidyverse)
 library(dplyr)
 library(plotly)
 library(knitr)
+library(ggplot2)
 
 opts_chunk$set(
   warning = FALSE,
@@ -90,6 +91,9 @@ tail(cv_states)
 str(cv_states)
 ```
 
+The date is not in the right format, so we need to change that into a
+date variable.
+
 ### 3\. Format the data
 
   - Make date into a date variable
@@ -111,8 +115,8 @@ cv_states$state <- factor(cv_states$state, levels = state_list)
 
 # format the state abbreviation (abb) variable
 ### FINISH THE CODE HERE ###
-abb_list = ___ 
-cv_states$abb = ___
+abb_list = unique(cv_states$abb) 
+cv_states$abb <- factor(cv_states$abb,levels = abb_list)
   
 # order the data first by state, second by date
 cv_states = cv_states[order(cv_states$state, cv_states$date),]
@@ -128,6 +132,12 @@ summary(cv_states)
 min(cv_states$date)
 max(cv_states$date)
 ```
+
+The range of the dates is January 21st, 2020 to October 27th, 2020.
+
+The range of the cases is from 1 to 923828.
+
+The range of the deaths is from 0 to 33092
 
 ### 4\. Add `new_cases` and `new_deaths` and correct outliers
 
@@ -161,8 +171,8 @@ for (i in 1:length(state_list)) {
 
   #### FINISH THE CODE HERE ###
   for (j in 2:nrow(cv_subset)) {
-    cv_subset$new_cases[j] =  ___ 
-    cv_subset$new_deaths[j] = ___
+    cv_subset$new_cases[j] =  cv_subset$cases[j] - cv_subset$cases[j-1]
+    cv_subset$new_deaths[j] = cv_subset$deaths[j] - cv_subset$deaths[j-1]
   }
 
   # include in main dataset
@@ -173,14 +183,14 @@ for (i in 1:length(state_list)) {
 # Inspect outliers in new_cases and new_deaths using plotly
 ### FINISH THE CODE HERE ###
 p1<-ggplot(cv_states, 
-           aes( ___ )
+           aes(x = date, y = new_cases, color = state)
            ) + geom_line() + geom_point(size = .5, alpha = 0.5)
 ggplotly(p1)
 p1<-NULL # to clear from workspace
 
 ### FINISH THE CODE HERE ###
 p2<-ggplot(cv_states, 
-           aes(___)
+           aes(x = date, y = new_deaths, color = state)
            ) + geom_line() + geom_point(size = .5, alpha = 0.5)
 ggplotly(p2)
 p2<-NULL # to clear from workspace
