@@ -249,7 +249,8 @@ cv_states = cv_states %>% mutate(naive_CFR = round((deaths*100/cases),2))
 
 # create a `cv_states_today` variable
 ### FINISH THE CODE HERE ###
-cv_states_today = ___ 
+max_date <- max(cv_states$date)
+cv_states_today = cv_states %>% filter(date == as.Date(max_date))
 ```
 
 ## II. Interactive plots
@@ -275,7 +276,7 @@ cv_states_today = ___
 # pop_density vs. cases
 ### FINISH THE CODE HERE ###
 cv_states_today %>% 
-  plot_ly(x = ___, y = ___, 
+  plot_ly(x = ~pop_density, y = ~cases, 
           type = 'scatter', mode = 'markers', color = ~state,
           size = ~population, sizes = c(5, 70), marker = list(sizemode='diameter', opacity=0.5))
 
@@ -284,13 +285,13 @@ cv_states_today_scatter <- cv_states_today %>% filter(state!="District of Columb
 
 # pop_density vs. cases after filtering
 cv_states_today_scatter %>% filter(state!="District of Columbia") %>% 
-  plot_ly(x = ___, y = ___, 
+  plot_ly(x = ~pop_density, y = ~cases, 
           type = 'scatter', mode = 'markers', color = ~state,
           size = ~population, sizes = c(5, 70), marker = list(sizemode='diameter', opacity=0.5))
 
 # pop_density vs. deathsper100k
 cv_states_today_scatter %>% filter(state!="District of Columbia") %>% 
-  plot_ly(x = ___, y = ___, 
+  plot_ly(x = ~pop_density, y = ~deathsper100k, 
           type = 'scatter', mode = 'markers', color = ~state,
           size = ~population, sizes = c(5, 70), marker = list(sizemode='diameter', opacity=0.5))
 
